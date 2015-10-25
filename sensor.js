@@ -15,5 +15,4 @@ udp.on('listening',function(){
     .on('message',function(msg,rinfo){
 	console.log('Received %d bytes from %s',msg.length,rinfo.address);
 	db.save(nFlow.parse(msg),rinfo.address);
-//	console.info(JSON.stringify(nFlow.parse(msg)));
     });
