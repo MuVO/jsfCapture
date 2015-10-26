@@ -1,8 +1,6 @@
-var db = require('./database.js');
-db.createTable();
-
+var db	= require('./database.js')('netflow.dat').init();
+var udp	= require('dgram').createSocket('udp4');
 var nFlow = require('./netflow.js');
-var udp = require('dgram').createSocket('udp4');
 
 udp.bind(9996);
 udp.on('listening',function(){
@@ -14,5 +12,5 @@ udp.on('listening',function(){
     })
     .on('message',function(msg,rinfo){
 	console.log('Received %d bytes from %s',msg.length,rinfo.address);
-	db.save(nFlow.parse(msg),rinfo.address);
+	db.save(nFlow(msg),rinfo.address);
     });
